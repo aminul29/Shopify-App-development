@@ -3,7 +3,7 @@
 client_id = "8b0f8f3dfdbf7228b39e2c67f90c9612"
 name = "July-App"
 handle = "july-app-2"
-application_url = "https://physiology-explosion-consistent-jj.trycloudflare.com"
+application_url = "https://memory-picture-tuning-cz.trycloudflare.com"
 embedded = true
 
 [build]
@@ -27,9 +27,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://physiology-explosion-consistent-jj.trycloudflare.com/auth/callback",
-  "https://physiology-explosion-consistent-jj.trycloudflare.com/auth/shopify/callback",
-  "https://physiology-explosion-consistent-jj.trycloudflare.com/api/auth/callback"
+  "https://memory-picture-tuning-cz.trycloudflare.com/auth/callback",
+  "https://memory-picture-tuning-cz.trycloudflare.com/auth/shopify/callback",
+  "https://memory-picture-tuning-cz.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
