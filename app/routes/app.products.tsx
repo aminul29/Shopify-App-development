@@ -1,10 +1,13 @@
-// 1. Import the necessary Polaris components
-import{ Page, Layout, Card, Text, Box } from "@shopify/polaris";
+// Import the necessary Polaris components
+import { Page, Layout, Card, Text, Box, Thumbnail, ResourceList, ResourceItem } from "@shopify/polaris";
 
-// 8. Import the loader Function type json function and useLoaderData from remix
+// Import the loader Function type json function and useLoaderData from remix
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+
+// 18. import the Thumbnail component
+import { ProductIcon } from "@shopify/polaris-icons";
 
 // 9. import the authenticate function
 import { authenticate } from "../shopify.server";
@@ -37,8 +40,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     //  12. convert the response to json and store it in a variable
     const productsData = (await (await response).json()).data
 
-    // 13. log the data
-    console.log(productsData);
     return json({
         products: productsData.products.edges
     })
@@ -47,9 +48,33 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 // 2. create a function to render the page
 export default function Products() {
-    // 14. get the shop data from the loader
+    // Get the shop data from the loader
     const { products } = useLoaderData<typeof loader>();
-    console.log(products);
+
+    // 17. create a function to render the media
+    const renderMedia = (image: any) => {
+        return image ? <Thumbnail source={image.url} alt={image.altText} /> 
+            : <Thumbnail source={ProductIcon} alt="Product" /> // 18. render the thumbnail if there is no image
+    }
+
+    // 16. create a function to render the resource list
+    const renderItem = (item: typeof products[number]) => {
+        const { id, url, title, handle, featuredImage } = item.node;
+        
+        // 19. render media
+        return (
+            <ResourceItem
+                id={id}
+                media={renderMedia(featuredImage)}
+                url={url}
+                onClick={() => {shopify.toast.show(`${title} :Product clicked`)}}
+            >
+            <Text as="h5" variant="bodyMd"> {title} </Text>
+            <div>{handle}</div>
+            </ResourceItem>
+        )
+    }
+
     return (
         <Page>
 
@@ -74,7 +99,15 @@ export default function Products() {
             <Layout>
                 <Layout.Section>
                     <Card>
-                        
+                        {/* 15. render the resource list */}
+                        <ResourceList 
+                            resourceName= {{
+                                singular: "Product",
+                                plural: "Products"
+                            }}
+                            items={products}
+                            renderItem={renderItem}
+                        />
                     </Card>
                 </Layout.Section>
             </Layout>
