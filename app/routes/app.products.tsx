@@ -1,5 +1,5 @@
 // 1. Import the necessary Polaris components
-import{ Page, Layout, Card, Text, Button, Box } from "@shopify/polaris";
+import{ Page, Layout, Card, Text, Box } from "@shopify/polaris";
 
 // 8. Import the loader Function type json function and useLoaderData from remix
 import { json } from "@remix-run/node";
@@ -18,33 +18,38 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     // 11. Create the graphql request
     const response = admin.graphql(`
         #graphql
-        query fetchshop {
-            shop {
-                id
-                name
+        query fetchProducts {
+            products(first: 10) {
+                edges {
+                    node {
+                        id
+                        title
+                        handle
+                        featuredImage {
+                            url
+                        }
+                    }
+                }
             }
         }    
     `)
 
     //  12. convert the response to json and store it in a variable
-    const shopData = (await (await response).json()).data
+    const productsData = (await (await response).json()).data
 
     // 13. log the data
-    console.log(shopData);
+    console.log(productsData);
     return json({
-        shop: shopData.shop
+        products: productsData.products.edges
     })
 
 }
 
-
-
 // 2. create a function to render the page
 export default function Products() {
-
     // 14. get the shop data from the loader
-    const { shop } = useLoaderData<typeof loader>();
-
+    const { products } = useLoaderData<typeof loader>();
+    console.log(products);
     return (
         <Page>
 
@@ -69,11 +74,7 @@ export default function Products() {
             <Layout>
                 <Layout.Section>
                     <Card>
-                        {/* 15. render the shop name */}
-                        <Text as="h2" variant="headingMd">{shop.name}</Text>
-                        <Button onClick={() => {
-                            shopify.toast.show("Button clicked");
-                        }}>HeLLo</Button>
+                        
                     </Card>
                 </Layout.Section>
             </Layout>
