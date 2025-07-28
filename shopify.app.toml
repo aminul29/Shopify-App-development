@@ -3,7 +3,7 @@
 client_id = "8b0f8f3dfdbf7228b39e2c67f90c9612"
 name = "July-App"
 handle = "july-app-2"
-application_url = "https://memory-picture-tuning-cz.trycloudflare.com"
+application_url = "https://huntington-prototype-identifier-query.trycloudflare.com"
 embedded = true
 
 [build]
@@ -23,13 +23,13 @@ api_version = "2025-07"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_products, write_products"
 
 [auth]
 redirect_urls = [
-  "https://memory-picture-tuning-cz.trycloudflare.com/auth/callback",
-  "https://memory-picture-tuning-cz.trycloudflare.com/auth/shopify/callback",
-  "https://memory-picture-tuning-cz.trycloudflare.com/api/auth/callback"
+  "https://huntington-prototype-identifier-query.trycloudflare.com/auth/callback",
+  "https://huntington-prototype-identifier-query.trycloudflare.com/auth/shopify/callback",
+  "https://huntington-prototype-identifier-query.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
